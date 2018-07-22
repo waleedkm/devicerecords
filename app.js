@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended:true }));
 mongoose.connect("mongodb://localhost:27017/pickerdevice", {useNewUrlParser:true});
 
 var Schema = mongoose.Schema
-//Shema definitions
+//Schema definitions
 
 var userSchema = new Schema({
     
