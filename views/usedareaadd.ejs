@@ -2,12 +2,12 @@
 
 <div class="jumbotron">
     <div style="width:30%;margin:0 auto">
-        <form  action="/users" method="POST">
+        <form  action="/usedarea" method="POST">
             <div class="form-group">
-                <input class="form-control" type="text" name="user[name]" placeholder="name of user">
+                <input class="form-control" type="text" name="usedarea[name]" placeholder="Name of Area">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="user[role]" placeholder="role">
+                <input class="form-control" type="text" name="usedarea[users]" placeholder="Users">
             </div>
           
             <div class="form-group">
@@ -21,7 +21,7 @@
 </div>
 <div class="jumbotron">
     <form method="GET">
-    <button class="btn btn-primary btn-lg" method="GET" type="submit" formaction="/users" >List Users</button>
+    <button class="btn btn-primary btn-lg" method="GET" type="submit" formaction="/usedarea" >List Users</button>
     </form>
 </div>  
 
