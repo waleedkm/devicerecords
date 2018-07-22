@@ -8,3 +8,4 @@ Device Fields
 5. in warehouse
 6. Used in
 7. Transactions[list]
+8.Comments[list]
