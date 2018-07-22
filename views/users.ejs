@@ -1,0 +1,28 @@
+<%include partials/header%>
+
+<div class="jumbotron">
+<table class = "table" style="width:90%">
+    <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Role</th> 
+  </tr>
+<%user.forEach(function(dev){ %>
+ 
+ <tr>
+    <td><%=dev.name%></td>
+    <td><%=dev.role%></td> 
+    <form method="DELETE">
+    <td><button class="btn btn-primary btn-sm" method="DELETE" type="submit" formaction="/users/delete/<%=dev._id%>" >Delete</button></td></form>
+  </tr>
+
+
+<%})%>
+</table>
+</div>
+<div class="jumbotron">
+    <form method="GET">
+    <button class="btn btn-primary btn-lg" method="GET" type="submit" formaction="/users/new" >Add a User</button>
+    </form>
+</div>    
+
+<%include partials/footer%>

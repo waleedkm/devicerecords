@@ -1,0 +1,47 @@
+<% include partials/header %>
+
+<div class="jumbotron">
+    <div style="width:30%;margin:0 auto">
+<form  action="/devices" method="POST">
+    <div class="form-group">
+    <input class="form-control" type="text" name="device[name]" placeholder="name of device">
+    </div>
+    <div class="form-group">
+    <input class="form-control" type="text" name="device[onecno]" placeholder="1c no">
+    </div>
+    <div class="form-group">
+    <input class="form-control" type="text" name="device[owner]" placeholder= "Owner of the device">
+    </div>
+    <div class="input-group mb3 form-group ">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Used By</label>
+        </div>
+        
+            <select class="form-group custom-select" id="inputGroupSelect01" name="device[usedby]">
+                <%user.forEach(function(user){%>
+                    <option value=<%=user._id%>><%=user.name%></option>      
+                <%})%>
+              
+        
+            </select>
+        
+    </div>
+    <div class="form-group">
+    <input class="form-control" type="text" name="device[txnno]" placeholder="txn no">
+    </div>
+    <div class="form-group">
+    <input class="form-control" name="device[type]" placeholder="txntype">
+    </div>
+    <div class="form-group">
+    <button class="form-control btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+    
+    
+    
+</form>
+</div>
+</div>
+
+
+
+<% include partials/header %>
