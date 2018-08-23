@@ -1,0 +1,31 @@
+<%include partials/header%>
+
+<div class="jumbotron">
+<table class = "table" style="width:90%">
+    <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Txn ID</th> 
+    <th scope="col" >Date</th>
+  </tr>
+<%transactions.forEach(function(dev){ %>
+ 
+ <tr>
+    <td><%=dev.name%></td>
+    <td><%=dev.trasactionid%></td> 
+    <td><%=dev.date%></td>
+    <form method="DELETE">
+    <td><button class="btn btn-primary btn-sm" method="DELETE" type="submit" formaction="/devices/delete/<%=dev._id%>" >Delete</button></td></form>
+        <form method="POST">
+    <td><button class="btn btn-primary btn-success" method="POST" type="submit" formaction="/transactions/<%=dev._id%>" >Open</button></td></form>
+  </tr>
+
+
+<%})%>
+</table>
+</div>    
+    
+    
+    
+
+
+<%include partials/footer%>

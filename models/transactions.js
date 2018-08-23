@@ -5,7 +5,9 @@ var transactionSchema = new Schema({
     
     name:String,
     trasactionid:String,
-    date:{type:Date,default: Date.now} 
+    date:{type:Date,default: Date.now},
+    devices:[{type:Schema.Types.ObjectId,ref:'devices'}],
+    type:String
     
 });
 

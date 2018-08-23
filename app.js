@@ -2,258 +2,182 @@ var express = require("express");
 var app = express();
 var ejs = require("ejs");
 var bodyParser = require("body-parser");
+var serveStatic = require("serve-static");
 var mongoose = require("mongoose");
+var passport  = require("passport");
+var LocalStrategy = require('passport-local').Strategy;
+var passportLocalMongoose = require('passport-local-mongoose');
+var middlewareObj = require('./middleware/index.js');
+var isLoggedIn = middlewareObj.isLoggedIn;
+var logins=require("./models/logins");
 
+
+app.use(require("express-session")({
+    secret: "Once again Rusty wins cutest dog!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(logins.authenticate()));
+passport.serializeUser(logins.serializeUser());
+passport.deserializeUser(logins.deserializeUser());
+
+
+
+
+
+
+app.use(bodyParser.urlencoded({extended:true }));
 // Models REquire
 var transactions = require("./models/transactions")
 var    owner =require("./models/owner"),
     devices=require("./models/devices"),
     usedarea=require("./models/usedarea")
+    
+
+
+    
+
+
+var devicesRoutes   = require("./routes/devices.js");
+var ownersRoutes   = require("./routes/owners.js");
+var usedareaRoutes   = require("./routes/usedarea.js");
+var transactionaddRoutes   = require("./routes/transactions.js");
+// var YandexStrategy = require('passport-yandex').Strategy;
+// ID: f50d1f897c2a40c3a8e17e1b6bcae9d2
+// Password: f863752634f04f0291c2cfe9250cf4f9
+// Callback URL: https://learn-with-colt-waleedkm.c9users.io/devices
+
+// ===============================================
+
+// passport.use(new YandexStrategy({
+//     clientID: "f50d1f897c2a40c3a8e17e1b6bcae9d2",
+//     clientSecret: "f863752634f04f0291c2cfe9250cf4f9",
+//     callbackURL: "https://learn-with-colt-waleedkm.c9users.io/devices"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//       console.log(profile.id);
+      
+//     logins.findOne({ yandexId: profile.id }, function (err, user) {
+//         console.log(yandexId);
+//         console.log(user)
+//       return done(err, user);
+//     });
+//   }
+// ));
+
+// passport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
+
+// passport.deserializeUser(function(obj, done) {
+//   done(null, obj);
+// });
 
 
 
 
+// ===============================================
 
+app.use(serveStatic("public"));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({extended:true }));
+
 mongoose.connect("mongodb://localhost:27017/device_records_1", {useNewUrlParser:true});
+app.use(devicesRoutes);
+app.use(ownersRoutes);
+app.use(usedareaRoutes);
+app.use(transactionaddRoutes);
 
 var Schema = mongoose.Schema
 //Schema definitions
+//=============================================
+
+
+
+//======================================================
+//PASSPORT CONFIGURATION
+// app.use(require('express-session')({
+//     secret: "Crystal is something",
+//     resave: false,
+//     saveUninitialized: false
+// }));
+
+
+// logins.register(new logins({username:"waleed2"}),"waleed2",function(err){
+//   if(err){
+//       console.log(err);
+//   }
+// });
 
 
 
 
-// Route for listing devices
-app.get("/devices/new",function(req, res) {
-    console.log("new loaded")
-    owner.find({},function(err,docs){
-        if(err){
-            console.log(err)
-        }else{
-            console.log(docs)
-            usedarea.find({},function(err, usedarea) {
-                if(err){
-                    console.log(err)
-                }else{
-                    
-                   res.render("deviceadd",{owner:docs,usedarea:usedarea})  
-                }
-                
-            });
- 
-            
-        }
-        
-    })
+
+
+
+// newlogin.save();
+
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//     logins.findOne({ username: username }, function (err, user) {
+//       if (err) { return done(err); }
+//       console.log(user);
+//       if (!user) { return done(null, false); }
+//       if (!user.validPassword(password)) {
+//         return done(null, false, { message: 'Incorrect password.' });
+//       }
+//       return done(null, user);
+//     });
+//   }
+// ));
+
+// var newUser = new logins({username:"irfan1"});
+// logins.register(newUser,"admin",function(err,user){
+//     if(err){
+//         console.log(err);
+//     }
     
-     
+    
+// });
+
+
+
+
+
+//=============================================
+app.get("/login",function(req,res){
+        res.render("login")
+  
+    
 })
-
-// Route for adding Owners
-app.get("/owners/new",function(req, res) {
-    console.log("new loaded")
-    
-    res.render("owneradd")    
-
-     
-})
-
-// Route for listing Owners
-
-
-app.get("/owners",function(req, res) {
-
-    owner.find({},function(err,docs){
-        if(err){
-            console.log(err)
-        }else{
-            console.log(docs)
-           res.render("owners",{owner:docs}) 
-            
-        }
-        
-    })
-    
-    
-})
-
-
-
-// Post Route for owners
-
-
-app.post("/owners",function(req, res) {
-
-
-    owner.create(req.body.owner,function(err,user){
-        if(err){
-            console.log(err);
-        }else{
-            res.redirect("/owners")
-            
-        }
-        
-    })
-})
-
-
-
-
-
-app.get("/owners/delete/:id",function(req,res){
-     console.log(req.params.id)
-     var id =req.params.id;
-    owner.findById({_id:id},function(err,docs){
-        
-        if(err){
-           console.log(err)
-          }
-        else{
-            console.log(docs)
-            docs.remove();
-            res.redirect("/owners")
-            
-        }
-        
-    });
-    
+app.post("/login", passport.authenticate('local', {
+    successRedirect: "/devices",
+    failureRedirect: "/login",failureFlash: false
+}), function(req, res){
+    console.log("password")
+  
 });
 
-// USED AREA ADD
-
-// Route for listing Owners
-
-
-app.get("/usedarea",function(req, res) {
-
-    usedarea.find({},function(err,docs){
-        if(err){
-            console.log(err)
-        }else{
-            console.log(docs)
-           res.render("usedarea",{usedarea:docs}) 
-            
-        }
-        
-    })
-    
-    
-})
-
-
-
-// Post Route for owners
-
-
-app.post("/usedarea",function(req, res) {
-
-
-    usedarea.create(req.body.usedarea,function(err,user){
-        if(err){
-            console.log(err);
-        }else{
-            res.redirect("/usedarea")
-            
-        }
-        
-    })
-})
 
 
 
 
-
-app.get("/usedarea/delete/:id",function(req,res){
-     console.log(req.params.id)
-     var id =req.params.id;
-    usedarea.findById({_id:id},function(err,docs){
-        
-        if(err){
-           console.log(err)
-          }
-        else{
-            console.log(docs)
-            docs.remove();
-            res.redirect("/usedarea")
-            
-        }
-        
-    });
-    
-});
-
-// Route for adding Used Area
-app.get("/usedarea/new",function(req, res) {
-    console.log("new loaded")
-    
-    res.render("usedareaadd")    
-
-     
-})
 
 
 
 
 
  
-// Post Route for devices
-
-app.post("/devices",function(req,res){
-
-    devices.create(req.body.device,function(err,device){
-        if(err){console.log(err)}
-        else{
-            res.redirect("/devices")
-            
-        }
-        
-        
-    })
-    
-})
-
-// Device delete Route
-
-app.get("/devices/delete/:id",function(req,res){
-     console.log(req.params.id)
-     var id =req.params.id;
-    devices.findById({_id:id},function(err,docs){
-        
-        if(err){
-           console.log(err)
-          }
-        else{
-            console.log(docs)
-            docs.remove();
-            res.redirect("/devices")
-            
-        }
-        
-    });
-    
-});
-
-// Listing of devices
-
-app.get("/devices",function(req,res){
-    
-    devices.find({}).populate({ path: 'owner', select: 'name' }).
-  populate({ path: 'usedin', select: 'name' }).exec(function(err,docs){
-        if(err){
-            console.log(err)
-        }else{
-            console.log(docs)
-        res.render("devices",{devices:docs});
-        }
-    })
-        
-    
-    
-});
 
 // Landing Page
+
+app.get("/logout",function(req, res) {
+    req.logout();
+    res.redirect("/")
+})
 
 app.get("/",function(req,res){
     
@@ -261,7 +185,6 @@ app.get("/",function(req,res){
 })
 
 
-
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("Server started!!!"); 
-});
+})

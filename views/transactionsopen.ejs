@@ -1,0 +1,80 @@
+<%include partials/printheader%>
+<div>
+
+<h4 style="text-center:left;float:left;"><strong><%=transactions.name%></strong></h4><h4 style="text-align:right;float:right;"><strong>Date: </strong><%=transactions.date.getDate()%>-<%=transactions.date.getMonth()%>-<%=transactions.date.getFullYear()%></h4><br/>
+</div>
+
+<h4 style="clear:left;"><strong>Location:</strong> DIP-2, Main Warehouse</h4>
+<h4><strong>Department:</strong> IT Department</h4>
+<h4><strong>Requested by:</strong> IT Department</h4>
+<span style="display:block; height: 4%;"></span>
+<h4><strong>Signature:</strong> ________________</h4>
+<span style="display:block; height: 15%;"></span>
+<%if(toflag=="torma"){var trword = "to RMA for repairing"}else{var trword = "from RMA after repairing"}%>
+<p>
+    Please allow IT Department to transfer Devices <%=trword%> on <%=transactions.date.getDate()%>-<%=transactions.date.getMonth()%>-<%=transactions.date.getFullYear()%>. Below details has been attached
+    
+    
+    
+</p>
+
+
+
+<table class = "table" style="width:90%;font-size:24px;">
+    <tr>
+        <th scope="col">Sl No</th>    
+        <th scope="col">Name</th>
+        <th scope="col">1c No</th> 
+
+    </tr>
+    
+    <%transactions.devices.forEach(function(dev,i){%>
+
+
+    
+
+    <tr>
+        <td><%=i+1%></td>
+        <td><%=dev.name%></td>
+        <td><%=dev.onecid%></td> 
+
+    
+    </tr>
+    
+    <%})%>
+    
+</table>
+
+<table class = "table-bordered table" style="width:90%;font-size:24px;>
+
+    <tr>
+        <th style="item-align:center" scope="col"><h2 style="text-align:center">For Department Approval </h2></th>
+    </tr>
+    <tr>
+        <td style="width: 46.66%" scope="col">Khwaja Junaid Waheed</td>    
+        <td scope="col"></td>
+        
+    </tr>
+    <tr>
+        <td scope="col">Shan Raja</td>    
+        <td scope="col"></td>
+        
+    </tr>
+    
+    
+</table>
+
+
+    
+    
+
+
+<input type="button" id="printpagebutton" onClick="window.print()" value="Print This Page"/>
+
+
+
+
+
+
+
+<%include partials/printfooter%>
