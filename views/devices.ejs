@@ -17,6 +17,7 @@
     <td><%=dev.usedin.name%></td>
     <form method="DELETE">
     <td><button class="btn btn-primary btn-sm" method="DELETE" type="submit" formaction="/devices/delete/<%=dev._id%>" >Delete</button></td></form>
+    <form method="DELETE"><td><button class="btn btn-primary btn-sm" method="GET" type="submit" formaction="/devices/open/<%=dev._id%>" >Open</button></td></form>
   </tr>
 
 

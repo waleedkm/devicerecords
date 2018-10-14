@@ -1,7 +1,16 @@
 <% include partials/header%>
 
+<% if(error && error.length > 0){ %>
+        <div class="alert alert-warning" role="alert">
+          <%=error%>
+        </div>
+        
+<% } %> 
+
 <div class="jumbotron">
 <form action="/login" method="POST">
+    
+
     <input type="text" name="username" placeholder="username">
     <input type="password" name="password" placeholder="password">
     <input type="submit" value="Log In">

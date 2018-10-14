@@ -1,18 +1,18 @@
 <%include partials/printheader%>
 <div>
 
-<h4 style="text-center:left;float:left;"><strong><%=transactions.name%></strong></h4><h4 style="text-align:right;float:right;"><strong>Date: </strong><%=transactions.date.getDate()%>-<%=transactions.date.getMonth()%>-<%=transactions.date.getFullYear()%></h4><br/>
+<h4 style="text-center:left;float:left;"><strong><%=transactions.name%></strong></h4><h4 style="text-align:right;float:right;"><strong>Date: </strong><%=transactions.date.getDate()%>-<%=transactions.date.getMonth()+1%>-<%=transactions.date.getFullYear()%></h4><br/>
 </div>
 
 <h4 style="clear:left;"><strong>Location:</strong> DIP-2, Main Warehouse</h4>
 <h4><strong>Department:</strong> IT Department</h4>
 <h4><strong>Requested by:</strong> IT Department</h4>
-<span style="display:block; height: 4%;"></span>
+<span style="display:block; height: 1.5%;"></span>
 <h4><strong>Signature:</strong> ________________</h4>
-<span style="display:block; height: 15%;"></span>
+<span style="display:block; height: 0.3%;"></span>
 <%if(toflag=="torma"){var trword = "to RMA for repairing"}else{var trword = "from RMA after repairing"}%>
 <p>
-    Please allow IT Department to transfer Devices <%=trword%> on <%=transactions.date.getDate()%>-<%=transactions.date.getMonth()%>-<%=transactions.date.getFullYear()%>. Below details has been attached
+    Please allow IT Department to transfer Devices <%=trword%> on <%=transactions.date.getDate()%>-<%=transactions.date.getMonth()+1%>-<%=transactions.date.getFullYear()%>. Below details has been attached
     
     
     
@@ -45,18 +45,18 @@
     
 </table>
 
-<table class = "table-bordered table" style="width:90%;font-size:24px;>
+<table class = "table-bordered table" style="border: 3px solid black;border-collapse: collapse;width:90%;font-size:24px;>
 
     <tr>
-        <th style="item-align:center" scope="col"><h2 style="text-align:center">For Department Approval </h2></th>
+        <th style="item-align:center" scope="col"><h3 style="text-align:center">For Department Approval </h3></th>
     </tr>
     <tr>
-        <td style="width: 46.66%" scope="col">Khwaja Junaid Waheed</td>    
+        <td style="width: 46.66%;line-height: 40px;" scope="col">Mohit Caleb</td>    
         <td scope="col"></td>
         
     </tr>
     <tr>
-        <td scope="col">Shan Raja</td>    
+        <td style="width: 46.66%;line-height: 40px;" scope="col">Shan Raja</td>    
         <td scope="col"></td>
         
     </tr>

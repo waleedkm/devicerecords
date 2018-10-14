@@ -10,6 +10,9 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var middlewareObj = require('./middleware/index.js');
 var isLoggedIn = middlewareObj.isLoggedIn;
 var logins=require("./models/logins");
+var flash = require("connect-flash")
+
+
 
 
 app.use(require("express-session")({
@@ -17,12 +20,14 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(logins.authenticate()));
 passport.serializeUser(logins.serializeUser());
 passport.deserializeUser(logins.deserializeUser());
+
 
 
 
@@ -37,6 +42,13 @@ var    owner =require("./models/owner"),
     usedarea=require("./models/usedarea")
     
 
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+    
+})
 
     
 

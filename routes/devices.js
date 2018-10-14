@@ -5,6 +5,8 @@ var middlewareObj = require('../middleware/index.js');
 var isLoggedIn = middlewareObj.isLoggedIn;
 
 
+
+
 // var LocalStrategy = require("passport-local");
 // var passport  = require("passport")
 // var LocalStrategy = require("passport-local");
@@ -80,6 +82,25 @@ router.post("/devices",function(req,res){
     
 })
 
+//device open route
+
+router.get("/devices/open/:id",function(req,res){
+    devices.findById({_id:req.params.id}).populate({ path: 'owner', select: 'name' }).
+  populate({ path: 'usedin', select: 'name' }).exec(function(err,docs){
+      if(err){
+          console.log(err)
+          console.log("ERRREEEEEE")
+      }else{
+          console.log("OPEEEEEEn")
+          res.send(docs)
+          
+      }
+      
+  })
+    
+    
+})
+
 // Device delete Route
 
 router.get("/devices/delete/:id",isLoggedIn,function(req,res){
@@ -112,6 +133,7 @@ router.get("/devices",isLoggedIn,function(req,res){
         }else{
             console.log(docs)
         res.render("devices",{devices:docs});
+       
         }
     })
         
